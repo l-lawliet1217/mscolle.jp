@@ -14,6 +14,9 @@ def right(text, n):
 def mid(text, n, m):
   return text[n-1:n+m-1]
 
+def removeExtraChars(text):
+  return text.replace(" ", "").replace("\n", "")
+
 #TOPページのurlをrに格納
 top_url = "https://misscolle.com"
 top_url_response = requests.get(top_url)
@@ -61,10 +64,12 @@ for contest_url in contests_url:
     table = bs_obj.findAll("table")[0]
     rows = table.findAll("tr")
 
+    dataObj = {}
+    print("========%s========" % contest_url)
     for row in rows:
-        print("========row========")
-        print(row.th.getText())
-        print(row.td.getText())
+        dataObj[row.th.getText()] = removeExtraChars(row.td.getText())
+
+    print(dataObj)
     #コンテスト名
 
     #大学名
