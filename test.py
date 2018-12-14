@@ -1,6 +1,8 @@
 import requests
 import lxml.html
 import cssselect
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
 
 #Left,Right,middleを定義
 def left(text, n):
@@ -52,15 +54,17 @@ for contest_url in contests_url:
     #開催年度の取得 *
     print(right(contest_url,4))
 
-##****** Contestのページのスクレピング******##
-    #TOPページの中のHTMLをrootに格納。
-    contest_response = requests.get(contest_url)
-    contest_html = contest_response.text
-    contest_root = lxml.html.fromstring(contest_html)
+#****** Contestのページのスクレピング******##
+    contest_response = urlopen(contest_url)
+    bs_obj = BeautifulSoup(contest_response, "html.parser")
 
-    for item in contest_root.xpath("//*[@id='summary']"):
-        for entry in item.xpath(".//table/*"):
+    table = bs_obj.findAll("table")[0]
+    rows = table.findAll("tr")
 
+    for row in rows:
+        print("========row========")
+        print(row.th.getText())
+        print(row.td.getText())
     #コンテスト名
 
     #大学名
