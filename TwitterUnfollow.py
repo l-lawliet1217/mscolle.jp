@@ -147,8 +147,7 @@ def job():
     destroy_non_follow_back()
     destroy_non_active()
 
-job
-
+   
 # 1時間おきに処理を実行
 schedule.every().hour.do(job)
 while True:
