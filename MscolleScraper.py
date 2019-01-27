@@ -42,8 +42,13 @@ cursor = connector.cursor()
 
 #最後のプロフィール IDを取得
 id_select_sql = """select max(id) from user_info"""
-j = cursor.execute(id_select_sql) + 758
-print(j)
+cursor.execute(id_select_sql)
+j = cursor.fetchall()
+for jj in j:
+    for jjj in jj:
+        j = jjj + 1
+        print(j)
+
 # ****** TOPページのFooterから、URL一覧を取得する。 ******
 # フッター内のxpath内のデータを取得。
 for a in top_root.xpath("body/footer/div/div/ul/li/a"):
